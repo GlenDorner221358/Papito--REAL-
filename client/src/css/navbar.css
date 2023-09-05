@@ -1,0 +1,25 @@
+#navbarz{
+    font-weight: bold;
+    font-size: 140%;
+    margin-left: -10%;
+    background-color: #f3d34a;
+}
+
+#words{
+    margin-right: 5%;
+}
+
+.carouselimg{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+}
+
+#cart{
+    height: 50px;
+    width: 260px;
+    color: yellow;
+    background-color: black;
+    border-radius: 30px;
+    padding: 8px;
+    margin-right: 20%;
+    margin-left: 5%;
+}
