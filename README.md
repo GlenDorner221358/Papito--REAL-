@@ -167,7 +167,7 @@ Here I outline some things I could add or improve in the future.
 ## Final Outcome
 <!-- VIDEO DEMONSTRATION -->
 ### Video Demonstration
-[View Demonstration](https://drive.google.com/file/d/1io-1q4qiRtcVuSaE5UwAzL14OEUA-PDh/view?usp=sharing)
+[View Demonstration](https://drive.google.com/file/d/1424pBAnRZuv2rK7EgZ73Ldh30SO5JHfD/view?usp=drive_link)
 
 <!-- AUTHORS -->
 
