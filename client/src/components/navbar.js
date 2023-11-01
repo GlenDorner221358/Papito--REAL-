@@ -9,6 +9,11 @@ import Logo from '.././assets/logo.png';
 function Navbars() {
   let seshUser = sessionStorage.getItem('user');
 
+  const handleLogout = (e) =>{
+    sessionStorage.removeItem('user');
+    window.location.href = '/';
+  }
+
   return (
     <Navbar expand="lg" className="bg-body-primary" id="navbarz">
       <Container>
@@ -26,10 +31,18 @@ function Navbars() {
           <Nav className="me-auto">
             <Nav.Link id="words" href="/">Home</Nav.Link>
             <Nav.Link id="words" href="/products">Products</Nav.Link>
-            <Nav.Link id="words" href="/admininventory">Admininventory</Nav.Link>
-            <Nav.Link id="words" href="/adminorders">Adminorders</Nav.Link>
+            {seshUser === 'seemonster12@gmail.com' && <Nav.Link id="words" href="/admininventory">Admininventory</Nav.Link>}
+            {seshUser === 'seemonster12@gmail.com' && <Nav.Link id="words" href="/adminorders">Adminorders</Nav.Link>}
             <Nav.Link id="words" href="/checkout">Cart</Nav.Link>
-            <Nav.Link href="/login">{seshUser}</Nav.Link>
+            <Nav.Link>{seshUser}</Nav.Link>
+
+            {/* checks if there is a logged user, if not, removes log in button */}
+            { seshUser == null ? (
+              <Nav.Link href="/login"> Login </Nav.Link>
+            ) : (
+              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+            )}
+              
           </Nav>
         </Navbar.Collapse>
       </Container>

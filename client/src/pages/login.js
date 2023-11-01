@@ -1,29 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import "./../css/login.css";
 
 function Login (){
-    const [user, setUser] = useState([])
-    const [zaUser2, setZaUser2] = useState()
-    let acceptable = 0
+  
+    const [data, setData] = useState({ email: "", password: "" });
+	const [error, setError] = useState("");
 
-    const handleLogin = (e) =>{
-        e.preventDefault()
-        console.log("user ID = " + user)
-        axios.get('http://localhost:5000/api/users/'+ user)
-        .then(
-            acceptable = 1,
-            result => setZaUser2(result.data),
-            console.log(zaUser2)
-        )
-        .catch(err => console.log(err))
+    const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
+    };
+    
 
-        if (acceptable = 1) {
-            sessionStorage.setItem('user', user)
-            window.location.href = '/checkout'
-        }else{
-        alert('user not found')
-        }
+    const handleLogin = async (e) =>{
+        e.preventDefault();
+		try {
+			const url = "http://localhost:5000/auth";
+            console.log(data);
+			const { data: res } = await axios.post(url, data);
+			sessionStorage.setItem("token", res.data);
+			console.log(data)
+			if(data.email == "glen@gmail.com"){
+				sessionStorage.setItem("isAdmin","true")
+				sessionStorage.setItem("user", data.email)
+			}
+            window.location = "/";
+		} catch (error) {
+			if (
+				error.response &&
+				error.response.status >= 400 &&
+				error.response.status <= 500
+			) {
+				setError(error.response.data.message);
+			}
+		}
     }  
 
     const handleForgor = () =>{
@@ -37,8 +47,14 @@ function Login (){
                 <form onSubmit={handleLogin}>
                     {/* <!-- Email input --> */}
                     <div class="form-outline mb-4">
-                        <input type="text" id="form2Example1" class="form-control" onChange={e => setUser(e.target.value)}/>
-                        <label class="form-label" for="form2Example1">User ID</label>
+                    <input type="email" name="email" id="form2Example1" onChange={handleChange} class="form-control" />
+                        <label class="form-label" for="form2Example1">Email</label>
+                    </div>
+
+                    {/* <!-- Password input --> */}
+                    <div class="form-outline mb-4">
+                    <input type="password" name="password" id="form2Example2" onChange={handleChange} class="form-control" />
+                        <label class="form-label" for="form2Example2">Password</label>
                     </div>
 
                     {/* <!-- 2 column grid layout for inline styling --> */}
@@ -59,8 +75,11 @@ function Login (){
 
                     {/* <!-- Submit button --> */}
                     <button type="button" class="btn btn-primary btn-lg btn-block w-100" id="siglogbutton" onClick={handleLogin}> Log in </button>
-
                 </form>
+                {/* go to sign up page button */}
+                <a href='/signup'>
+                    <button class="btn btn-primary btn-lg btn-block w-100"> Sign up </button>
+                </a>
             </div>
         </div>
     )

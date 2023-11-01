@@ -13,3 +13,14 @@
 .right{
     float: right;
 }
+
+#paymentinfo{
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    height: fit-content;
+    padding: 2%;
+    background-color: white;
+    margin-top: -13%;
+    border-radius: 7px;
+}

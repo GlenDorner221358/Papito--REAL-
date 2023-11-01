@@ -8,6 +8,7 @@ const path = require('path')
 const productsRoute = require('./routes/products')
 const userRoute = require('./routes/user')
 const ordersRoute = require('./routes/orders')
+const authRoute = require('./routes/auth')
 require('dotenv/config')
 
 const app = express();
@@ -37,6 +38,7 @@ const upload =multer({
 app.use(productsRoute)
 app.use(userRoute)
 app.use(ordersRoute)
+app.use(authRoute)
 
 mongoose.connect(process.env.DB_CONNECTION, {
     useNewUrlParser: true,

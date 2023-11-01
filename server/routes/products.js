@@ -16,6 +16,12 @@ router.get('/api/products/:id', async (req, res) => {
     res.json(findProducts)
 })
 
+// Get by category 
+router.get('/api/products/:category', async (req, res) => {
+    const findProducts = await ProductsSchema.find({ category });
+    res.json(findProducts)
+})
+
 //Update
 router.put('/api/products/:id', async (req, res) => {
     const { id } = req.params.id
@@ -31,6 +37,7 @@ router.post('/api/products/', async (req, res) => {
         name: req.body.name,
         category: req.body.category,
         price: req.body.price,
+        stock: req.body.stock,
         image: req.body.image
     }
     console.log(stationeryData)
@@ -41,7 +48,7 @@ router.post('/api/products/', async (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-//Delete
+//Delete by id
 router.delete('/api/products/:id', async (req, res) => {
     const { id } = req.params.id
     await ProductsSchema.findByIdAndDelete(req.params.id)

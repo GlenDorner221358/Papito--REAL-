@@ -8,6 +8,7 @@ import Checkout from './pages/checkout';
 import Adminorders from './pages/adminorders';
 import Admininventory from './pages/admininventory';
 import Navbars from './components/navbar';
+import Signup from './pages/signup';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Navbars />
         <Routes>
           <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
           <Route path='/' element={<Landing />} />
           <Route path='/products' element={<Products />} />
           <Route path='/single' element={<Single />} />

@@ -25,7 +25,7 @@ function Orders() {
         <form className="list-group ordered">
             <a className="list-group-item list-group-item-action flex-column align-items-start">
             <div className="d-flex w-100 justify-content-between">
-                <label class="col-sm-3 col-form-label">Products: {orderx.product}</label>
+                <label class="col-sm-12 col-form-label">Products: {orderx.products.join(', ')}</label>
             </div>
             <div className="d-flex w-100 justify-content-between">
                 <label class="col-sm-5 col-form-label">Date ordered: {orderx.date}</label>

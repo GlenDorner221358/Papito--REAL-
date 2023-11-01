@@ -17,7 +17,7 @@ function Footer (){
 
             <img id="social" class="left" src={Email} alt="email icon goes here" height="70" />
 
-            <p class="left contactus"> Papito@gmail.co,</p>
+            <p class="left contactus"> Papito@gmail.com</p>
             <p class="left contactus"> Tel : 066 236 6656 </p>
         </div>
     )

@@ -5,8 +5,8 @@ const OrdersSchema = mongoose.Schema({
         type: String, 
         required: true
     },
-    product: {
-        type: String,
+    products: {
+        type: [String],
         required: true
     },
     date: {

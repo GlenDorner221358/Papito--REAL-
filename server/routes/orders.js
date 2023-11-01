@@ -24,8 +24,8 @@ router.put('/api/orders/:id', async (req, res) => {
 
 //Create
 router.post('/api/orders', async (req, res) => {
-    const orders = new OrdersSchema({ ...req.body });
-    await orders.save()
+    const newOrder = new OrdersSchema(req.body);
+    await newOrder.save()
         .then(response => res.json(response))
         .catch(error => res.status(500).json(error))
 })

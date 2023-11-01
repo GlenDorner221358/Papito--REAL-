@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+
+function getDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const date = today.getDate();
+    return `${month}/${date}/${year}`;
+}
 
 function Dingus() {
     const cartString = sessionStorage.getItem('cart');
     const cartArray = JSON.parse(cartString);
 
-    const [user, setUser] = useState();
-    const [userEmail, setUserEmail] = useState();
-    const [date, setDate] = useState();
-    const [amount, setAmount] = useState();
+    const userEmail = sessionStorage.getItem('user');
+    const [date, setDate] = useState(getDate());
+    const amount = 1;
 
     let total = 0;
 
@@ -17,48 +24,37 @@ function Dingus() {
         sessionStorage.removeItem('cart')
         alert("Cart has been cleared.")
         console.log("cart Cleared")
+        window.location = "/checkout"
     };
 
      // checks if a user is logged in, if they are, adds order to order database
      const handleAuth = () => {
-        const userString = sessionStorage.getItem('user')
-        
-        if (userString == null || userString == undefined) {
+        if (userEmail === null || userEmail === undefined) {
             window.location.href = '/login';
         } else {
-            setAmount(1)
-            setDate(new Date())
-            console.log(userString)
-            axios.get('http://localhost:5000/api/users/' + userString)
-            .then(result => setUser(result.data))
-            .catch(err => console.log(err))
-
-            console.log(user)
-
-            // Object.keys(user).map((userKey) => (
-            //     setUserEmail(userKey.email),
-            //     console.log(userEmail)
-            // ))
-
-            setUserEmail(user.email)
             console.log(userEmail)
+
+            const productNames = cartArray.map(item => item.name);
 
             const payload = {
                 user: userEmail,
-                product: cartArray,
+                products: productNames,
                 date: date,
                 amount: amount
             }
 
             console.log(payload)
             axios.post('http://localhost:5000/api/orders', payload)
-            .then(result => console.log(result))
+            .then(result => {
+                console.log(result);
+                sessionStorage.removeItem('cart'); // Clear the cart after successful checkout
+                alert('Order Placed!');
+            })
             .catch(err => console.log(err))
-            alert('Order Placed!')
         }
     };
 
-    if (cartArray == undefined || cartArray[0] == null) {
+    if (cartArray === undefined || cartArray[0] === null) {
         return(
             <div>
                 <section class="h-100 gradient-custom">
@@ -131,7 +127,7 @@ function Dingus() {
     }else{
         // get total price
         cartArray.map((item) => {
-            total = total + item.price;
+            total = total + item.price * item.quantity;
         })
 
         const leCartLmao = cartArray.map((carts) => (
@@ -142,7 +138,7 @@ function Dingus() {
                 {/* <!-- Image --> */}
                 <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                 <img src={carts.image}
-                    class="w-100" alt="Blue Jeans Jacket" />
+                    class="w-100" alt={carts.name} />
                 <a href="#!">
                     <div class="mask" style={{backgroundColor: 'rgba(251, 251, 251, 0.2)'}}></div>
                 </a>
@@ -160,22 +156,12 @@ function Dingus() {
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                 {/* <!-- Quantity --> */}
                 <div class="d-flex mb-4" style={{maxWidth: '300px'}}>
-                <button class="btn btn-primary px-3 me-2"
-                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                        -
-                    <i class="fas fa-minus"></i>
-                </button>
         
                 <div class="form-outline">
-                    <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control"/>
+                    <input id="form1" min="0" name="quantity" value={carts.quantity} class="form-control" />
                     <label class="form-label" for="form1">Quantity</label>
                 </div>
         
-                <button class="btn btn-primary px-3 ms-2"
-                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                        +
-                    <i class="fas fa-plus"></i>
-                </button>
                 </div>
         
                 {/* <!-- Price --> */}
@@ -257,7 +243,6 @@ function Dingus() {
                     </div>
                 </div>
                 </section>
-                
             </div>
         );
     }

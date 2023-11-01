@@ -7,6 +7,7 @@ import Footer from "../components/footer";
 function Single (){
 
     const gottenID = sessionStorage.getItem('singleID');
+    const [quantity, setQuantity] = useState();
 
     // gets the product assosciated with the id actually
     const [product, setProduct] = useState([]);
@@ -19,25 +20,27 @@ function Single (){
     });
 
     const cartArray = [];
-    let asshole = JSON.parse(sessionStorage.getItem('cart'));
+    let cart = sessionStorage.getItem('cart');
     const handleCart = (product) => {
-        if (asshole == undefined || asshole == null) {
-            console.log(product)
+        if (cart === undefined || cart === null) {
+            product.quantity = quantity
+
             cartArray.push(product)
-            console.log(cartArray)
+
             let string = JSON.stringify(cartArray)
             sessionStorage.setItem('cart', string)
             alert("Item Added to cart")
         }else{
-            console.log(product)
-            cartArray.push(asshole)
-            cartArray.push(product)
-            console.log(cartArray)
-            let string = JSON.stringify(cartArray)
-            sessionStorage.setItem('cart', string)
+            product.quantity = quantity;
+            cartArray.push(cart);
+            cartArray.push(product);
+
+            let string = JSON.stringify(cartArray);
+            sessionStorage.setItem('cart', string);
             alert("Item Added to cart")
-        } 
-    }
+        }
+    } 
+    
 
     return(
         <div id="holderTheta">
@@ -74,10 +77,10 @@ function Single (){
                                     <p class="about">I am going to shit myself</p>
                                     <div class="sizes mt-5">
                                         <h6 class="text-uppercase">Quantity: </h6> 
-                                            <input type="number" name="quantity" placeholder='1' /> 
+                                            <input type="number" name="quantity" placeholder='0' defaultValue={0} onChange={(e) => setQuantity(e.target.value)} /> 
                                     </div>
                                     <div class="cart mt-4 align-items-center"> 
-                                        <button class="btn btn-danger text-uppercase mr-2 px-4" onClick={() => handleCart(product)} >Add to cart</button> 
+                                        <button class="btn btn-danger text-uppercase mr-2 px-4" onClick={() => handleCart(product)} disabled={product.stock === 0}>Add to cart</button> 
                                         <i class="fa fa-heart text-muted"></i> 
                                         <i class="fa fa-share-alt text-muted"></i> 
                                     </div>
