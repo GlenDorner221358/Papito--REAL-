@@ -8,9 +8,27 @@ import Logo from '.././assets/logo.png';
 
 function Navbars() {
   let seshUser = sessionStorage.getItem('user');
+  let isAdmin = sessionStorage.getItem('isAdmin');
+  
+  const [user, setUser] = useState("");
+  const [username, setUsername] = useState("");
 
+  // gets the users name
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/user/' + seshUser)
+    .then(
+      result => setUser(result.data),
+      setUsername(user.username)
+    )
+    
+    .catch(err => console.log(err));
+  });
+
+  // handles the logout 
   const handleLogout = (e) =>{
     sessionStorage.removeItem('user');
+    sessionStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('token');
     window.location.href = '/';
   }
 
@@ -31,10 +49,10 @@ function Navbars() {
           <Nav className="me-auto">
             <Nav.Link id="words" href="/">Home</Nav.Link>
             <Nav.Link id="words" href="/products">Products</Nav.Link>
-            {seshUser === 'seemonster12@gmail.com' && <Nav.Link id="words" href="/admininventory">Admininventory</Nav.Link>}
-            {seshUser === 'seemonster12@gmail.com' && <Nav.Link id="words" href="/adminorders">Adminorders</Nav.Link>}
+            {isAdmin = true && <Nav.Link id="words" href="/admininventory">Admininventory</Nav.Link>}
+            {isAdmin = true && <Nav.Link id="words" href="/adminorders">Adminorders</Nav.Link>}
             <Nav.Link id="words" href="/checkout">Cart</Nav.Link>
-            <Nav.Link>{seshUser}</Nav.Link>
+            <Nav.Link>{username}</Nav.Link>
 
             {/* checks if there is a logged user, if not, removes log in button */}
             { seshUser == null ? (

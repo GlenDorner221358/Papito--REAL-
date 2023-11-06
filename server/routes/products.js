@@ -4,32 +4,6 @@ const ProductsSchema = require('../models/products')
 const path = require('path')
 const router = express();
 
-//Get All
-router.get('/api/products/', async (req, res) => {
-    const findProducts = await ProductsSchema.find();
-    res.json(findProducts)
-})
-
-//Get Single
-router.get('/api/products/:id', async (req, res) => {
-    const findProducts = await ProductsSchema.findById(req.params.id);
-    res.json(findProducts)
-})
-
-// Get by category 
-router.get('/api/products/:category', async (req, res) => {
-    const findProducts = await ProductsSchema.find({ category });
-    res.json(findProducts)
-})
-
-//Update
-router.put('/api/products/:id', async (req, res) => {
-    const { id } = req.params.id
-    await ProductsSchema.updateOne({_id: req.params.id} , req.body)
-        .then(response => res.json(response))
-        .catch(error => res.status(500).json(error))
-})
-
 //Create
 router.post('/api/products/', async (req, res) => {
     
@@ -44,6 +18,41 @@ router.post('/api/products/', async (req, res) => {
     const products = new ProductsSchema(stationeryData);
     console.log(products)
     await products.save()
+        .then(response => res.json(response))
+        .catch(error => res.status(500).json(error))
+})
+
+//Get All
+router.get('/api/products/', async (req, res) => {
+    const findProducts = await ProductsSchema.find();
+    res.json(findProducts)
+})
+
+//Get Single
+router.get('/api/products/:id', async (req, res) => {
+    const findProducts = await ProductsSchema.findById(req.params.id);
+    res.json(findProducts)
+})
+
+// Get by category 
+router.get('/api/productsCat/:category', async (req, res) => {
+    console.log("Category");
+    console.log(req.params.category);
+    const category  = req.params.category
+
+    if(category == "none"){
+        const findProducts = await ProductsSchema.find();
+        res.json(findProducts)
+    } else{
+        const findProducts = await ProductsSchema.find({ category: category });
+        res.json(findProducts)
+    }
+})
+
+//Update
+router.put('/api/products/:id', async (req, res) => {
+    const { id } = req.params.id
+    await ProductsSchema.updateOne({_id: req.params.id} , req.body)
         .then(response => res.json(response))
         .catch(error => res.status(500).json(error))
 })

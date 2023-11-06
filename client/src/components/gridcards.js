@@ -7,12 +7,12 @@ import "./../css/products.css";
 
 function CardGrid() {
   const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('none');
   const quantity = 1;
 
   // Gets all the products from the db or based on category
   useEffect(() => {
-    let url = `http://localhost:5000/api/products`;
+    let url = 'http://localhost:5000/api/productsCat';
     if (category) {
       url += `/${category}`;
     }
@@ -31,24 +31,23 @@ function CardGrid() {
 
 
   // add to cart code
-  const cartArray = [];
-  let asshole = sessionStorage.getItem('cart');
-
+  let cartArray = [];
+  let cart = sessionStorage.getItem('cart');
   const handleCart = (product) => {
-    if (asshole === undefined || asshole === null) {
-      console.log(product)
+    if (cart === undefined || cart === null) {
       product.quantity = quantity
+
       cartArray.push(product)
-      console.log(cartArray)
+
       let string = JSON.stringify(cartArray)
       sessionStorage.setItem('cart', string)
       alert("Item Added to cart")
     }else{
-          console.log(product)
-          cartArray.push(asshole)
           product.quantity = quantity
+
+          cartArray = JSON.parse(cart);
           cartArray.push(product)
-          console.log(cartArray)
+    
           let string = JSON.stringify(cartArray)
           sessionStorage.setItem('cart', string)
           alert("Item Added to cart")

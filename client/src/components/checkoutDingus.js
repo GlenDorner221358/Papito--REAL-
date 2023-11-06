@@ -15,8 +15,8 @@ function Dingus() {
 
     const userEmail = sessionStorage.getItem('user');
     const [date, setDate] = useState(getDate());
-    const amount = 1;
 
+    let amount = 0;
     let total = 0;
 
     const handleClear = (e) =>{
@@ -49,12 +49,13 @@ function Dingus() {
                 console.log(result);
                 sessionStorage.removeItem('cart'); // Clear the cart after successful checkout
                 alert('Order Placed!');
+                window.location = "/checkout"
             })
             .catch(err => console.log(err))
         }
     };
 
-    if (cartArray === undefined || cartArray[0] === null) {
+    if (cartArray === undefined || cartArray === null || cartArray.length === 0) {
         return(
             <div>
                 <section class="h-100 gradient-custom">
@@ -125,9 +126,10 @@ function Dingus() {
             </div>
         );
     }else{
-        // get total price
+        // get total everything
         cartArray.map((item) => {
             total = total + item.price * item.quantity;
+            amount = amount + item.quantity
         })
 
         const leCartLmao = cartArray.map((carts) => (

@@ -19,7 +19,8 @@ function Single (){
         .catch(err => console.log(err));
     });
 
-    const cartArray = [];
+    // Adds to cart
+    let cartArray = [];
     let cart = sessionStorage.getItem('cart');
     const handleCart = (product) => {
         if (cart === undefined || cart === null) {
@@ -32,9 +33,10 @@ function Single (){
             alert("Item Added to cart")
         }else{
             product.quantity = quantity;
-            cartArray.push(cart);
+            
+            cartArray = JSON.parse(cart); 
             cartArray.push(product);
-
+  
             let string = JSON.stringify(cartArray);
             sessionStorage.setItem('cart', string);
             alert("Item Added to cart")
@@ -74,7 +76,7 @@ function Single (){
                                             {/* <div class="ml-2"> <small class="dis-price">$59</small> <span>40% OFF</span> </div> */}
                                         </div>
                                     </div>
-                                    <p class="about">I am going to shit myself</p>
+                                    <p class="about">description</p>
                                     <div class="sizes mt-5">
                                         <h6 class="text-uppercase">Quantity: </h6> 
                                             <input type="number" name="quantity" placeholder='0' defaultValue={0} onChange={(e) => setQuantity(e.target.value)} /> 
