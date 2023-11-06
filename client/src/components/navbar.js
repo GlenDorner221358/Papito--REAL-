@@ -49,8 +49,8 @@ function Navbars() {
           <Nav className="me-auto">
             <Nav.Link id="words" href="/">Home</Nav.Link>
             <Nav.Link id="words" href="/products">Products</Nav.Link>
-            {isAdmin = true && <Nav.Link id="words" href="/admininventory">Admininventory</Nav.Link>}
-            {isAdmin = true && <Nav.Link id="words" href="/adminorders">Adminorders</Nav.Link>}
+            {isAdmin === "true" && <Nav.Link id="words" href="/admininventory">Admininventory</Nav.Link>}
+            {isAdmin === "true" && <Nav.Link id="words" href="/adminorders">Adminorders</Nav.Link>}
             <Nav.Link id="words" href="/checkout">Cart</Nav.Link>
             <Nav.Link>{username}</Nav.Link>
 

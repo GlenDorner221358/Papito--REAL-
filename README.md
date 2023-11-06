@@ -164,7 +164,19 @@ Here I outline some things I could add or improve in the future.
 - Fix the login screen so that you can log in regularly instead of with a user ID.
 - Change the product schema to accept variations and the amount in stock as well.
 
+
+
 ## Final Outcome
+### Mockups
+
+#### Landing
+![image5](https://github.com/GlenDorner221358/Papito--REAL-/blob/main/mockups/Mockup3.png)
+#### Products
+![image6](https://github.com/GlenDorner221358/Papito--REAL-/blob/main/mockups/Mockup2.png
+#### Cart
+![image7](https://github.com/GlenDorner221358/Papito--REAL-/blob/main/mockups/Mockup1.png)
+<br>
+
 <!-- VIDEO DEMONSTRATION -->
 ### Video Demonstration
 [View Demonstration](https://drive.google.com/file/d/1424pBAnRZuv2rK7EgZ73Ldh30SO5JHfD/view?usp=drive_link)
