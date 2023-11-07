@@ -5,12 +5,16 @@ import "./../css/login.css";
 function Login (){
   
     const [data, setData] = useState({ email: "", password: "" });
+    const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
 
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
     };
     
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleLogin = async (e) =>{
         e.preventDefault();
@@ -19,10 +23,11 @@ function Login (){
             console.log(data);
 			const { data: res } = await axios.post(url, data);
 			sessionStorage.setItem("token", res.data);
+            sessionStorage.setItem("usermail", data.email);
 			console.log(data)
 			if(data.email == "glen@gmail.com"){
 				sessionStorage.setItem("isAdmin","true")
-				sessionStorage.setItem("user", data.email)
+				sessionStorage.setItem("usermail", data.email)
 			}
             window.location = "/";
 		} catch (error) {
@@ -47,14 +52,14 @@ function Login (){
                 <form onSubmit={handleLogin}>
                     {/* <!-- Email input --> */}
                     <div class="form-outline mb-4">
-                    <input type="email" name="email" id="form2Example1" onChange={handleChange} class="form-control" />
-                        <label class="form-label" for="form2Example1">Email</label>
+                    <label class="form-label" for="form2Example1">Email</label>
+                    <input type="email" name="email" id="form2Example1" onChange={handleChange} class="form-control" />  
                     </div>
 
                     {/* <!-- Password input --> */}
                     <div class="form-outline mb-4">
-                    <input type="password" name="password" id="form2Example2" onChange={handleChange} class="form-control" />
-                        <label class="form-label" for="form2Example2">Password</label>
+                    <label class="form-label" for="form2Example2">Password</label>
+                    <input type={showPassword ? "text" : "password"} name="password" id="form2Example2" onChange={handleChange} class="form-control" />
                     </div>
 
                     {/* <!-- 2 column grid layout for inline styling --> */}
@@ -80,6 +85,10 @@ function Login (){
                 <a href='/signup'>
                     <button class="btn btn-primary btn-lg btn-block w-100"> Sign up </button>
                 </a>
+
+                <button class="btn btn-primary" style={{marginTop: "1%"}} onClick={handleShowPassword}>
+                    {showPassword ? "Hide Password" : "Show Password"}
+                </button>
             </div>
         </div>
     )

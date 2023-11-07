@@ -4,6 +4,7 @@ const { User } = require("../models/user");
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 
+// create a new user
 router.post("/auth", async (req, res) => {
 	try {
 		const { error } = validate(req.body);

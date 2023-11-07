@@ -76,7 +76,7 @@ function Single (){
                                             {/* <div class="ml-2"> <small class="dis-price">$59</small> <span>40% OFF</span> </div> */}
                                         </div>
                                     </div>
-                                    <p class="about">description</p>
+                                    
                                     <div class="sizes mt-5">
                                         <h6 class="text-uppercase">Quantity: </h6> 
                                             <input type="number" name="quantity" placeholder='0' defaultValue={0} onChange={(e) => setQuantity(e.target.value)} /> 

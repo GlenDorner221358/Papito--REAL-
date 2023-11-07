@@ -7,18 +7,20 @@ import Navbar from 'react-bootstrap/Navbar';
 import Logo from '.././assets/logo.png';
 
 function Navbars() {
-  let seshUser = sessionStorage.getItem('user');
+  let seshUser = sessionStorage.getItem('usermail');
   let isAdmin = sessionStorage.getItem('isAdmin');
   
   const [user, setUser] = useState("");
   const [username, setUsername] = useState("");
+  const [user2, setUser2] = useState("");
 
   // gets the users name
   useEffect(() => {
     axios.get('http://localhost:5000/api/user/' + seshUser)
     .then(
       result => setUser(result.data),
-      setUsername(user.username)
+      setUsername(user.username),
+      setUser2(sessionStorage.getItem('user'))
     )
     
     .catch(err => console.log(err));
@@ -26,6 +28,7 @@ function Navbars() {
 
   // handles the logout 
   const handleLogout = (e) =>{
+    sessionStorage.removeItem('usermail');
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('isAdmin');
     sessionStorage.removeItem('token');
@@ -52,10 +55,10 @@ function Navbars() {
             {isAdmin === "true" && <Nav.Link id="words" href="/admininventory">Admininventory</Nav.Link>}
             {isAdmin === "true" && <Nav.Link id="words" href="/adminorders">Adminorders</Nav.Link>}
             <Nav.Link id="words" href="/checkout">Cart</Nav.Link>
-            <Nav.Link>{username}</Nav.Link>
+            <Nav.Link>{username}{user2}</Nav.Link>
 
-            {/* checks if there is a logged user, if not, removes log in button */}
-            { seshUser == null ? (
+            {/* checks if there is a logged user or user2 is null, if so, removes log in button */}
+            { seshUser == null && user2 == null ? (
               <Nav.Link href="/login"> Login </Nav.Link>
             ) : (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>

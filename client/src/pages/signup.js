@@ -6,15 +6,14 @@ function Signup (){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState()
-    let acceptable = 0
 
     const handleSignup = (e) =>{
         e.preventDefault()
         axios.post('http://localhost:5000/api/addUser', { username: username, email: email, password: password })
         .then(response => {
             console.log(response)
-            sessionStorage.setItem('user', username)
-            window.location.href = '/'
+            sessionStorage.setItem('usermail', email)
+            window.location.href = '/login'
         })
         .catch(err => console.log(err))
     }  

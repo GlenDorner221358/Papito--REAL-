@@ -11,33 +11,34 @@ function getDate() {
 
 function Dingus() {
     const cartString = sessionStorage.getItem('cart');
-    const cartArray = JSON.parse(cartString);
+    let cartArray = JSON.parse(cartString);
 
-    const userEmail = sessionStorage.getItem('user');
+    const user = sessionStorage.getItem('user');
+    const usermail = sessionStorage.getItem('usermail');
     const [date, setDate] = useState(getDate());
 
     let amount = 0;
     let total = 0;
 
-    const handleClear = (e) =>{
-        e.preventDefault();
-        sessionStorage.removeItem('cart')
-        alert("Cart has been cleared.")
-        console.log("cart Cleared")
+    const handleRemoveItem = (itemToRemove) => {
+        cartArray = cartArray.filter(item => item !== itemToRemove);
+        sessionStorage.setItem('cart', JSON.stringify(cartArray));
+        alert("Item has been removed.")
+        console.log("Item Removed")
         window.location = "/checkout"
     };
 
      // checks if a user is logged in, if they are, adds order to order database
      const handleAuth = () => {
-        if (userEmail === null || userEmail === undefined) {
+        if (usermail === null) {
             window.location.href = '/login';
         } else {
-            console.log(userEmail)
+            console.log(usermail)
 
             const productNames = cartArray.map(item => item.name);
 
             const payload = {
-                user: userEmail,
+                user: usermail,
                 products: productNames,
                 date: date,
                 amount: amount
@@ -160,7 +161,7 @@ function Dingus() {
                 <div class="d-flex mb-4" style={{maxWidth: '300px'}}>
         
                 <div class="form-outline">
-                    <input id="form1" min="0" name="quantity" value={carts.quantity} class="form-control" />
+                    <input id="form1" min="0" name="quantity" value={carts.quantity} defaultValue="1" class="form-control" />
                     <label class="form-label" for="form1">Quantity</label>
                 </div>
         
@@ -171,6 +172,7 @@ function Dingus() {
                 <strong>R{carts.price}</strong>
                 </p>
                 {/* <!-- Price --> */}
+                <button type="button" class="btn btn-danger btn-sm me-1 mb-2" onClick={() => handleRemoveItem(carts)}> Remove Item </button>
             </div>
             </div>
             {/* <!-- Single item --> */}
@@ -191,7 +193,6 @@ function Dingus() {
                             <h5 class="mb-0">Cart</h5>
                         </div>
                             {leCartLmao}
-                            <button type="button" class="btn btn-danger btn-sm me-1 mb-2" onClick={handleClear}> Clear Cart </button>
                         </div>
                         
                         <div class="card mb-4 mb-lg-0">
