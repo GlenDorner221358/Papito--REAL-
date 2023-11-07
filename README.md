@@ -172,7 +172,7 @@ Here I outline some things I could add or improve in the future.
 #### Landing
 ![image5](https://github.com/GlenDorner221358/Papito--REAL-/blob/main/mockups/Mockup3.png)
 #### Products
-![image6](https://github.com/GlenDorner221358/Papito--REAL-/blob/main/mockups/Mockup2.png
+![image6](https://github.com/GlenDorner221358/Papito--REAL-/blob/main/mockups/Mockup2.png)
 #### Cart
 ![image7](https://github.com/GlenDorner221358/Papito--REAL-/blob/main/mockups/Mockup1.png)
 <br>
